@@ -18,10 +18,16 @@ let opc="";
 let pase=0;
 
 const listacliente = [];
-listacliente.push(new Cliente("Mariana Perez", "Rivadavia 45", "Morón", "0114654-6542"));
-listacliente.push(new Cliente("Gonzalo Ríos", "Concordia 42","CABA","0115588-78542"));
-listacliente.push(new Cliente("Sandra Bertolo", "Leones 34","Morón","0113654-8956"));
-listacliente.push(new Cliente("Andres Suarez", "Figueroa 24","CABA","0115652-5544"));
+
+// Traemos de un archivo .json los datos
+
+fetch("./js/clientes.json")
+.then(response=>response.json())
+.then( data => {
+    data.forEach(basecliente => {
+        listacliente.push(new Cliente(basecliente.nombre, basecliente.direccion,basecliente.localidad,basecliente.telefono));
+    });
+})
 
 function agregarCliente(nomb,dir,loc,tel) {
     listacliente.push({nombre: nomb, direccion: dir, localidad: loc, telefono: tel});
@@ -39,7 +45,7 @@ function borroCliente(ubicacion){
         'Se eliminó el Cliente',
         '',
         'success'
-      )
+    )
 }
 
 function preguntaEliminar(ubicacion) {

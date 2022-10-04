@@ -1,11 +1,11 @@
 class Productos {
-    constructor(id, nombre, precio, stock, vencimiento, foto) {
+    constructor(id, nombre, precio, stock, vencimiento, imagen) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.vencimiento = vencimiento;
-        this.foto = foto;
+        this.imagen = imagen;
     }
 }
 
@@ -19,8 +19,6 @@ class ElementoCarrito {
 /**
  * Definiciones de constantes
  */
-// const estandarDolaresAmericanos = Intl.NumberFormat('en-US');
-
 //Arrays donde guardaremos catálogo de productos y elementos en carrito
 const productos = [];
 let elementosCarrito = [];
@@ -39,11 +37,14 @@ vaciar();
 cargarProductos();
 cargarCarrito();
 dibujarCarrito();
+//console.log(productos);
 dibujarCatalogoProductos();
 
 /**
- * Definiciones de funciones
+ * CARGA DE PRODUCTOS A TRAVES DE UN ARCHIVO JSON
  */
+
+
 
 function cargarProductos() {
     fetch("./js/productos.json")
@@ -52,16 +53,7 @@ function cargarProductos() {
         data.forEach(baseproducto => {
         productos.push (new Productos(baseproducto.id, baseproducto.nombre,baseproducto.precio,baseproducto.stock,baseproducto.vencimiento,baseproducto.imagen));
     });
-    });
-
-    productos.push (new Productos(1,'Ravioles',  1200,  10,  '12/10/2022', './imagenes/catalogoRavioles.jpg'));
-    productos.push (new Productos(2,'Agnolotis', 1800,  20, '12/12/2022', './imagenes/catalogoAgnolotis.jpg'));
-    productos.push (new Productos(3,'Tallarines',  900,  14,  '21/11/2022', './imagenes/catalogoTallarines.jpg'));
-    productos.push (new Productos(4,'Ñoquis', 750,  30,  '08/12/2022', './imagenes/catalogoNioquis.jpg'));
-    productos.push (new Productos(5,'Sorrentinos',  1400,  8, '12/09/2022', './imagenes/catalogoSorrentinos.jpg'));
-    productos.push (new Productos(6,'Tirabuzón',  800,  14,  '11/0/2022', './imagenes/catalogoTirabuzon.jpg'));
-    productos.push (new Productos(7,'Ñoquis a la Romana',  900,  14,  '15/10/2022', './imagenes/catalogoNioquisSemola.jpg'));
-    productos.push (new Productos(8,'Lasagna',  2100,  14,  '15/12/2022', './imagenes/catalogoLasagna.jpg')); 
+    })
 }
 
 function cargarCarrito() {
@@ -153,7 +145,7 @@ function crearCard(producto) {
 
     //Imagen
     let imagen = document.createElement("img");
-    imagen.src = producto.foto;
+    imagen.src = producto.imagen;
     imagen.className = "card-img-top";
     imagen.alt = producto.nombre;
 
@@ -219,9 +211,10 @@ function crearCard(producto) {
 
 function dibujarCatalogoProductos() {
     contenedorProductos.innerHTML = "";
-
+    //console.log(productos);
     productos.forEach(
         (producto) => {
+            console.log("HOLA");
             let contenedorCarta = crearCard(producto);
             contenedorProductos.append(contenedorCarta);
         }
